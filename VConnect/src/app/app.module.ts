@@ -13,7 +13,7 @@ import { ChatComponent } from './chat/chat.component';
 @NgModule({
   declarations: [
     AppComponent,
-    ChatComponent
+    ChatComponent,
   ],
   imports: [
     BrowserModule,

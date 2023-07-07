@@ -13,12 +13,16 @@ wss.broadcast = (ws, data) => {
 
 wss.on('connection', ws => {
     console.log(`Client connected. Total connected clients: ${wss.clients.size}`);
-
-    ws.on('message', message => {
-        msg = JSON.parse(message);
-        console.log(message + "\n\n");
-        wss.broadcast(ws, message);
-    });
+    ws.on("message", function message(data, isBinary) {
+        try {
+          const message = isBinary ? data : data.toString();
+          const jsonData = JSON.parse(message);
+          console.log(jsonData);
+          wss.broadcast(ws, message);
+        } catch (error) {
+          console.log("Invalid JSON:", message);
+        }
+      });
     ws.on('close', ws=> {
         console.log(`Client disconnected. Total connected clients: ${wss.clients.size}`);
     })
